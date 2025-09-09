@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookbook: Your Virtual Kitchen Assistant</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f0;
+      padding: 2rem;
+      color: #333;
+    }
+    h1 {
+      color: #d2691e;
+    }
+    .button {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      background-color: #ffa07a;
+      border: none;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #ff7f50;
+    }
+    .recipe {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍳 Cookbook: Your Virtual Kitchen Assistant</h1>
+
+  <button class="button" onclick="listRecipes()">List Recipes</button>
+  <div id="recipeList"></div>
+
+  <input type="text" id="recipeNameInput" placeholder="Enter recipe name">
+  <button class="button" onclick="showRecipe()">Get Recipe</button>
+
+  <div id="recipeDisplay" class="recipe"></div>
+
+  <script>
+    const recipes = {
+      "pancakes": {
+        ingredients: ["flour", "milk", "egg", "sugar", "baking powder", "salt"],
+        instructions: [
+          "Mix dry ingredients together.",
+          "Add milk and egg.",
+          "Stir until smooth.",
+          "Pour batter onto hot griddle.",
+          "Cook until bubbles form, then flip.",
+          "Cook until golden brown."
+        ]
+      },
+      "scrambled eggs": {
+        ingredients: ["eggs", "milk", "salt", "pepper", "butter"],
+        instructions: [
+          "Crack eggs into a bowl and whisk with milk, salt, and pepper.",
+          "Heat butter in a pan over medium heat.",
+          "Pour egg mixture into the pan.",
+          "Stir gently until curds form and eggs are cooked through."
+        ]
+      }
+    };
+
+    function listRecipes() {
+      const recipeList = document.getElementById("recipeList");
+      recipeList.innerHTML = "<h3>Available Recipes:</h3><ul>";
+      for (const name in recipes) {
+        recipeList.innerHTML += `<li>${name.charAt(0).toUpperCase() + name.slice(1)}</li>`;
+      }
+      recipeList.innerHTML += "</ul>";
+    }
+
+    function showRecipe() {
+      const input = document.getElementById("recipeNameInput").value.toLowerCase();
+      const recipe = recipes[input];
+      const display = document.getElementById("recipeDisplay");
+
+      if (recipe) {
+        let output = `<h2>${input.charAt(0).toUpperCase() + input.slice(1)}</h2>`;
+        output += "<strong>Ingredients:</strong><ul>";
+        recipe.ingredients.forEach(ingredient => {
+          output += `<li>${ingredient}</li>`;
+        });
+        output += "</ul><strong>Instructions:</strong><ol>";
+        recipe.instructions.forEach(step => {
+          output += `<li>${step}</li>`;
+        });
+        output += "</ol>";
+        display.innerHTML = output;
+      } else {
+        display.innerHTML = `<p style="color:red;">Recipe not found: "${input}"</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
